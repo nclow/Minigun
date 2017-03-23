@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.db import models
 from django.core.mail import send_mail
 import json
@@ -13,18 +13,18 @@ schema = yaml.load(open('minigunapp/schemas/email.yaml'))
 def email(request):
     if request.method in ['GET', 'POST']:
         return globals()[request.method.lower() + '_email'](request) # WTB a real router
+    raise Http404("Not found")
 
 def get_email(request):
-    return HttpResponse("get got")
+    emails = [json.loads(str(email)) for email in Email.objects.all()]
+    return JsonResponse(emails, safe=False)
 
 def post_email(request):
-    if request.method != 'POST':
-        raise Http404("Not found")
-
+    
     body = json.loads(request.body.decode("utf-8"))
     valid = v.validate(body, schema)
     if(not valid):
-        return HttpResponse(json.dumps(v.errors), status=400)
+        return JsonResponse(v.errors, status=400)
 
     email = Email(**body)
     email.from_ = 'nathan.clow@gmail.com'
