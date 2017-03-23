@@ -11,7 +11,8 @@ class Email(Document):
     body = StringField(max_length=99999)
     status = StringField(default='pending')
     error_message = StringField(max_length=9999)
-
+    retries = IntField(default=0)
+    
     def __str__(self):
         return self.to_json()
 
