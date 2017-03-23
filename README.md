@@ -10,7 +10,7 @@ An example email-sending program using django, mongo, celery, redis
 
 `source bin/activate`
 
-`pip install cerberus django mongoengine pyyaml celery[redis]`
+`pip install -r requirements.txt`
 
 `python manage.py runserver`
 
@@ -39,7 +39,3 @@ or
 
 https://github.com/nclow/minigun/blob/master/minigunapp/views.py
 https://github.com/nclow/minigun/blob/master/minigunapp/tasks.py
-
-### To Do
-
-* Requirements file (dist)
