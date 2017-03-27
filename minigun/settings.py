@@ -90,8 +90,6 @@ _MONGODB_HOST = '127.0.0.1'
 _MONGODB_NAME = 'minigun'
 _MONGODB_DATABASE_HOST = \
     'mongodb://%s/%s' % (_MONGODB_HOST, _MONGODB_NAME)
-    #'mongodb://%s:%s@%s/%s' \
-    #% (_MONGODB_USER, _MONGODB_PASSWD, _MONGODB_HOST, _MONGODB_NAME)
 
 mongoengine.connect(_MONGODB_NAME, host=_MONGODB_DATABASE_HOST)
 
@@ -134,9 +132,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT='465'
-EMAIL_HOST_USER='nathan.clow@gmail.com'
+EMAIL_HOST='localhost'
+EMAIL_PORT='25'
+EMAIL_HOST_USER='nclow@localhost'
 EMAIL_HOST_PASSWORD=''
 EMAIL_USE_TLS=False
-EMAIL_USE_SSL=True
+EMAIL_USE_SSL=False

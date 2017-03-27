@@ -1,6 +1,6 @@
 # Minigun
 
-An example email-sending program using django and mongo
+An example email-sending program using django, mongo, celery, redis
 
 ### Setup
 
@@ -10,13 +10,15 @@ An example email-sending program using django and mongo
 
 `source bin/activate`
 
-`pip install cerberus django mongoengine pyyaml`
+`pip install -r requirements.txt`
 
 `python manage.py runserver`
 
 or
 
 `python manage.py runserver 0.0.0.0:8000` to make it public
+
+`celery -A minigun worker -l info` to run the celery worker
 
 ### Issue Requests
 
@@ -30,12 +32,10 @@ or
 * Django
 * Mongoengine
 * Cerberus
+* Celery
+* Redis
 
 ### Where's the meat of it?
 
-Here: https://github.com/nclow/minigun/blob/master/minigunapp/views.py
-
-### To Do
-
-* Requirements file (dist)
-* Queueing
+https://github.com/nclow/minigun/blob/master/minigunapp/views.py
+https://github.com/nclow/minigun/blob/master/minigunapp/tasks.py
