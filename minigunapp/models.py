@@ -1,6 +1,5 @@
 from django.db import models
 import json
-# Create your models here.
 
 from mongoengine import *
 
@@ -15,8 +14,3 @@ class Email(Document):
     
     def __str__(self):
         return self.to_json()
-
-    # def __iter__(self):
-    #     for field_name in Email._meta.get_field("to"):
-    #         value = getattr(self, field_name, None)
-    #         yield (field_name, value)
