@@ -30,6 +30,7 @@ or
 
 * Mongodb
 * Django
+* Django Rest Framework
 * Mongoengine
 * Cerberus
 * Celery

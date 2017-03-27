@@ -1,36 +1,46 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, JsonResponse
 from django.db import models
+from django.forms.models import model_to_dict
 
 import json
 import yaml
 from cerberus import Validator
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
+
 from minigunapp.models import Email
+from minigunapp.serializers import EmailSerializer
 from minigunapp.tasks import send_email
 
 v = Validator()
 schema = yaml.load(open('minigunapp/schemas/email.yaml'))
 
-def email(request):
-    if request.method in ['GET', 'POST']:
-        return globals()[request.method.lower() + '_email'](request) # WTB a real router
-    raise Http404("Not found")
+class EmailList(APIView):
 
-def get_email(request):
-    emails = [json.loads(str(email)) for email in Email.objects.all()]
-    return JsonResponse(emails, safe=False)
+    def get(self, request, format=None):
+        emails = [EmailSerializer(email).data for email in Email.objects.all()]
+        return JsonResponse(emails, safe=False)
 
-def post_email(request):
-    body = json.loads(request.body.decode("utf-8"))
-    valid = v.validate(body, schema)
-    if(not valid):
-        return JsonResponse(v.errors, status=400)
+    def post(self, request, format=None):
+        body = json.loads(request.body.decode("utf-8"))
+        valid = v.validate(body, schema)
+        if(not valid):
+            return JsonResponse(v.errors, status=400)
 
-    email = Email(**body)
-    email.from_ = 'nathan.clow@gmail.com'
-    email.status = 'pending'    
-    email.save()
+        email = Email(**body)
+        email.from_ = 'nclow@localhost.localdomain'
+        email.status = 'pending'    
+        email.save()
 
-    send_email.delay(str(email.id))
+        send_email.delay(str(email.id))
 
-    return HttpResponse(str(email))
+        email = EmailSerializer(email)
+        return JsonResponse(email.data, safe=False)
+
+class EmailDetail(APIView):
+    def get(self, request, id, format=None):
+        email = Email.objects.get(id=id)
+        email = EmailSerializer(email)
+        return JsonResponse(email.data, safe=False)

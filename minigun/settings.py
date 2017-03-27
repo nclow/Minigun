@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['192.168.1.3']
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
+    'rest_framework_mongoengine',
     'minigunapp.apps.MinigunappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
