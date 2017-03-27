@@ -42,5 +42,5 @@ Example: https://www.digitalocean.com/community/tutorials/how-to-install-and-set
 
 ### Where's the meat of it?
 
-https://github.com/nclow/minigun/blob/master/minigunapp/views.py
-https://github.com/nclow/minigun/blob/master/minigunapp/tasks.py
+* https://github.com/nclow/minigun/blob/master/minigunapp/views.py
+* https://github.com/nclow/minigun/blob/master/minigunapp/tasks.py
