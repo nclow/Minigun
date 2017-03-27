@@ -134,9 +134,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT='465'
-EMAIL_HOST_USER='nathan.clow@gmail.com'
+EMAIL_HOST='localhost'
+EMAIL_PORT='25'
+EMAIL_HOST_USER='nclow@localhost'
 EMAIL_HOST_PASSWORD=''
 EMAIL_USE_TLS=False
-EMAIL_USE_SSL=True
+EMAIL_USE_SSL=False

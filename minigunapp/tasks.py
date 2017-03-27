@@ -19,7 +19,7 @@ def send_email(id):
         email.status = 'sent'
         print("Sent email {0}".format(email.id))
     except Exception as ex:
-        print("Failed to send email {0} ({1})".format(email.id, email.retries))
+        print("Failed to send email {0} ({1}): {2}".format(email.id, email.retries. str(ex)))
         email.status = 'error'
         email.error_message = str(ex)
         if(email.retries < 3):
