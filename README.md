@@ -20,11 +20,15 @@ or
 
 `celery -A minigun worker -l info` to run the celery worker
 
+Setup postfix or another MTA however you want and change the `EMAIL_` settings in `settings.py` to point to it
+
+Example: https://www.digitalocean.com/community/tutorials/how-to-install-and-setup-postfix-on-ubuntu-14-04
+
 ### Issue Requests
 
 `GET /minigun/email`
 
-```curl -XPOST 127.0.0.1:8000/minigun/email/ -d '{"to":"nathan.clow@gmail.com","subject":"Subject goes here","body":"Body goes here"}'```
+```curl -XPOST 127.0.0.1:8000/minigun/email/ -d '{"to":"username@localhost.localdomain","subject":"Subject goes here","body":"Body goes here"}'```
 
 ### What's in the sauce?
 
