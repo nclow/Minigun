@@ -90,8 +90,6 @@ _MONGODB_HOST = '127.0.0.1'
 _MONGODB_NAME = 'minigun'
 _MONGODB_DATABASE_HOST = \
     'mongodb://%s/%s' % (_MONGODB_HOST, _MONGODB_NAME)
-    #'mongodb://%s:%s@%s/%s' \
-    #% (_MONGODB_USER, _MONGODB_PASSWD, _MONGODB_HOST, _MONGODB_NAME)
 
 mongoengine.connect(_MONGODB_NAME, host=_MONGODB_DATABASE_HOST)
 
