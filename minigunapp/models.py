@@ -3,6 +3,7 @@ import json
 
 from mongoengine import *
 
+
 class Email(Document):
     to = StringField(max_length=254)
     from_ = StringField(max_length=254)
@@ -11,6 +12,6 @@ class Email(Document):
     status = StringField(default='pending')
     error_message = StringField(max_length=9999)
     retries = IntField(default=0)
-    
+
     def __str__(self):
         return self.to_json()

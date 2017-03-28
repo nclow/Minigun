@@ -12,26 +12,30 @@ from minigunapp.models import Email
 from minigunapp.serializers import EmailSerializer
 from minigunapp.tasks import send_email
 
+
 v = Validator()
 schema = yaml.load(open('minigunapp/schemas/email.yaml'))
 page_size = 10
+
 
 class EmailList(APIView):
 
     def get(self, request, format=None):
         """ Returns a single page of emails in Json format """
-        
+
         page = int(request.GET.get('page', 1))
         page = page if page > 0 else 1
         start = page_size * page
         end = page_size * (page + 1)
 
-        emails = Email.objects[start : end]
+        emails = Email.objects[start:end]
         emails = [EmailSerializer(email).data for email in emails]
         return JsonResponse(emails, safe=False)
 
     def post(self, request, format=None):
-        """ Creates and saves new email, then dispatches send task to celery. Returns the new email object."""
+        """ Creates and saves new email, then dispatches send task to celery.
+        Returns the new email object.
+        """
 
         body = json.loads(request.body.decode("utf-8"))
         valid = v.validate(body, schema)
@@ -40,13 +44,14 @@ class EmailList(APIView):
 
         email = Email(**body)
         email.from_ = 'nclow@localhost.localdomain'
-        email.status = 'pending'    
+        email.status = 'pending'
         email.save()
 
         send_email.delay(str(email.id))
 
         email = EmailSerializer(email)
         return JsonResponse(email.data, safe=False)
+
 
 class EmailDetail(APIView):
     def get(self, request, id, format=None):
