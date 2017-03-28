@@ -1,0 +1,15 @@
+subject: 
+    type: string
+    maxlength: 9999
+    required: True
+
+to:
+    type: string
+    maxlength: 254
+    required: True
+    regex: ^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$ #Not rfc822 compliant
+
+body: 
+    type: string
+    maxlength: 99999
+    required: True
