@@ -19,14 +19,20 @@ page_size = 10
 class EmailList(APIView):
 
     def get(self, request, format=None):
+        """ Returns a single page of emails in Json format """
+        
         page = int(request.GET.get('page', 1))
+        page = page if page > 0 else 1
         start = page_size * page
         end = page_size * (page + 1)
+
         emails = Email.objects[start : end]
         emails = [EmailSerializer(email).data for email in emails]
         return JsonResponse(emails, safe=False)
 
     def post(self, request, format=None):
+        """ Creates and saves new email, then dispatches send task to celery. Returns the new email object."""
+
         body = json.loads(request.body.decode("utf-8"))
         valid = v.validate(body, schema)
         if(not valid):
@@ -44,6 +50,8 @@ class EmailList(APIView):
 
 class EmailDetail(APIView):
     def get(self, request, id, format=None):
+        """ Returns a single email by id, in Json format """
+
         email = Email.objects.get(id=id)
         email = EmailSerializer(email)
         return JsonResponse(email.data, safe=False)

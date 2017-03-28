@@ -6,6 +6,8 @@ from django.core.mail import send_mail
 
 @shared_task
 def send_email(id):
+    """ Task that attempts to send the email with the given id. Retries on a delay until max failures reached. """
+    
     email = Email.objects.get(id=id)
 
     try:
