@@ -16,11 +16,16 @@ from minigunapp.tasks import send_email
 
 v = Validator()
 schema = yaml.load(open('minigunapp/schemas/email.yaml'))
+page_size = 10
 
 class EmailList(APIView):
 
     def get(self, request, format=None):
-        emails = [EmailSerializer(email).data for email in Email.objects.all()]
+        page = int(request.GET.get('page', 1))
+        start = page_size * page
+        end = page_size * (page + 1)
+        emails = Email.objects[start : end]
+        emails = [EmailSerializer(email).data for email in emails]
         return JsonResponse(emails, safe=False)
 
     def post(self, request, format=None):

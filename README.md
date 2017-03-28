@@ -26,9 +26,9 @@ Example: https://www.digitalocean.com/community/tutorials/how-to-install-and-set
 
 ### Issue Requests
 
-`GET /minigun/email`
+`curl -s 127.0.0.1:8000/minigun/email/?page=2`
 
-```curl -XPOST 127.0.0.1:8000/minigun/email/ -d '{"to":"username@localhost.localdomain","subject":"Subject goes here","body":"Body goes here"}'```
+```curl -s -XPOST 127.0.0.1:8000/minigun/email/ -d '{"to":"username@localhost.localdomain","subject":"Subject goes here","body":"Body goes here"}' | python -m json.tool```
 
 ### What's in the sauce?
 
