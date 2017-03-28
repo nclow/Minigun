@@ -1,4 +1,5 @@
-from __future__ import absolute_import, unicode_literals
+import logging 
+
 from celery import shared_task
 from minigunapp.models import Email
 from django.core.mail import send_mail
@@ -16,13 +17,13 @@ def send_email(id):
             fail_silently=False,
         )
         email.status = 'sent'
-        print("Sent email {0}".format(email.id))
+        logging.info("Sent email {0}".format(email.id))
     except Exception as ex:
-        print("Failed to send email {0} ({1}): {2}".format(email.id, email.retries. str(ex)))
+        logging.error("Failed to send email {0} ({1}): {2}".format(email.id, email.retries. str(ex)))
         email.status = 'error'
         email.error_message = str(ex)
         if(email.retries < 3):
-            print("Queueing email {0} for retry".format(email.id))
+            logging.info("Queueing email {0} for retry".format(email.id))
             email.retries += 1
             email.save()
             send_email.apply_async([str(email.id)], countdown=600)

@@ -1,10 +1,8 @@
-from django.shortcuts import render
-from django.http import HttpResponse, Http404, JsonResponse
-from django.db import models
-from django.forms.models import model_to_dict
-
 import json
 import yaml
+
+from django.http import HttpResponse, Http404, JsonResponse
+from django.shortcuts import render
 from cerberus import Validator
 from rest_framework.views import APIView
 from rest_framework.response import Response
